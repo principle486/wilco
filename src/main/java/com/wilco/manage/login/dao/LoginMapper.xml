@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="login-admin">
+	
+	<select id="getLoginInfo" resultType="memberBean">
+		select 	
+			mem_id as memId
+			,mem_pwd as memPwd
+			,mem_name as memName
+			,mem_mobile as memMobile
+			,mem_email as memEmail
+		from tb_admin_member
+		where mem_id = #memId#
+	</select>
+	
+
+</mapper>
