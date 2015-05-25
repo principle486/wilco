@@ -1,10 +1,12 @@
 package com.wilco.manage.login.service;
 
-import com.wilco.manage.global.beans.member.MemberBean;
+import org.springframework.stereotype.Service;
 
+import com.wilco.manage.global.beans.member.MemberSearchBean;
 
+@Service("loginManager")
 public interface LoginManager {
 	
-	public MemberBean loginInfo();
+	public String loginProcess(MemberSearchBean searchBean);
 	
 }

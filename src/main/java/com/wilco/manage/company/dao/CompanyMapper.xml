@@ -4,9 +4,61 @@
 
 <mapper namespace="company-admin">
 	
-	<select id="companyManageList" resultType="String">
-		select * from tb_company;
+	<sql id="tbCompany"> 
+		select
+			cp_mng_id as cpMngId
+			,cp_name as cpName
+			,cp_work_nm as cpWorkNm
+			,cp_work_office as cpWorkOffice
+			,cp_work_fax as cpWorkFax
+			,cp_work_tel as cpWorkTel
+			,cp_work_mobile as cpWorkMobile
+			,cp_work_email as cpWorkEmail
+			,cp_del_yn as cpDelYn
+			,reg_dm as regDm
+			,reg_id as regId
+			,upd_dm as updDm
+			,upd_id as updId
+		from tb_company
+	</sql>
+
+	<select id="companyManageList" resultType="companyBean">
+		<include refid="global-paging.paging-head"/>
+		<include refid="tbCompany"/>
+		<include refid="global-paging.paging-tail"/>
 	</select>
 	
+	<select id="companyManageListTotalCount" resultType="INTEGER">
+		select 
+			count(*)
+		from (	
+		<include refid="tbCompany"/>
+		) main
+	</select>
+	
+	<select id="generateMngId" resultType="String">
+		select 
+			concat(date_format(now(),'%Y'),lpad(max(substr(cp_mng_id,5,8))+1,4,0)) as newCpMngId
+		from tb_company
+	</select>
+	
+	<insert id="insertTbCompany" parameterType="companyBean">
+		INSERT INTO TB_COMPANY (cp_mng_id , cp_name , cp_work_nm , cp_work_office , cp_work_fax , cp_work_tel , cp_work_mobile , cp_work_email , reg_dm , reg_id , upd_dm , upd_id )
+		VALUES (#{cpMngId , jdbcType=VARCHAR},#{cpName , jdbcType=VARCHAR},#{cpWorkNm , jdbcType=VARCHAR},#{cpWorkOffice , jdbcType=VARCHAR} , #{cpWorkFax , jdbcType=VARCHAR}
+		,#{cpWorkTel , jdbcType=VARCHAR} , #{cpWorkMobile , jdbcType=VARCHAR} , #{cpWorkEmail , jdbcType=VARCHAR} , date_format(now(),'%Y%m%d%H%i%s') , #{regId , jdbcType=VARCHAR}
+		,null , null) 
+	</insert> 
+	
+	<update id="deleteTbCompany" parameterType="companySearchBean">
+		UPDATE TB_COMPANY
+		SET cp_del_yn = 'Y'
+			,upd_dm =  date_format(now(),'%Y%m%d%H%i%s')
+		WHERE cp_mng_id = #{cpMngId , jdbcType=VARCHAR}
+	</update>
+	
+	<select id="companyManageDetail" resultType="companyBean" parameterType="companySearchBean">
+		<include refid="tbCompany"/>
+		where cp_mng_id = #{cpMngId}
+	</select>
 
 </mapper>

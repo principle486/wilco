@@ -1,9 +1,11 @@
 package com.wilco.manage.global.beans.member;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
+@Alias("memberBean")
 public class MemberBean {
 	
 	private String memId; 

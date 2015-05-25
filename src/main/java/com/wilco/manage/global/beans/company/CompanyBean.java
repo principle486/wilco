@@ -1,8 +1,10 @@
 package com.wilco.manage.global.beans.company;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Alias("companyBean")
 public class CompanyBean {
 	
 	private String cpMngId; 
@@ -13,6 +15,7 @@ public class CompanyBean {
 	private String cpWorkTel;
 	private String cpWorkMobile;
 	private String cpWorkEmail;
+	private String cpDelYn;
 	private String regDm;
 	private String regId;
 	private String updDm;
@@ -89,6 +92,12 @@ public class CompanyBean {
 	}
 	public void setUpdId(String updId) {
 		this.updId = updId;
+	}
+	public String getCpDelYn() {
+		return cpDelYn;
+	}
+	public void setCpDelYn(String cpDelYn) {
+		this.cpDelYn = cpDelYn;
 	}
 	
 }
