@@ -9,6 +9,8 @@
 		<typeAlias type="com.wilco.manage.global.beans.member.MemberBean" alias="memberBean"/>
 		<typeAlias type="com.wilco.manage.global.beans.member.MemberSearchBean" alias="memberSearchBean"/>
 		<typeAlias type="com.wilco.manage.global.beans.security.SessionBean" alias="sessionBean"/>
+		<typeAlias type="com.wilco.manage.global.beans.product.ProductBean" alias="productBean" />
+		<typeAlias type="com.wilco.manage.global.beans.product.ProductSearchBean" alias="productSearchBean" />
 	  </typeAliases>
 	  <environments default="development">
 	    <environment id="development">
@@ -25,6 +27,7 @@
 	    <mapper resource="com/wilco/manage/global/paging/SqlPagingMapper.xml"/>
 	    <mapper resource="com/wilco/manage/company/dao/CompanyMapper.xml"/>
 	    <mapper resource="com/wilco/manage/login/dao/LoginMapper.xml"/>
+	    <mapper resource="com/wilco/manage/product/dao/ProductMapper.xml"/>
 	  </mappers>
 </configuration>
 

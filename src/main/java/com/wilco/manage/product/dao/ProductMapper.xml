@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product-admin">
+	
+	<sql id="tbProduct"> 
+		select
+			pd_mng_id as pdMngId
+			,pd_name as pdName
+			,pd_po as pdPo
+			,pd_po2 as pdPo2
+			,pd_valne as pdValne
+			,pd_type as pdType
+			,pd_type2 as pdType2
+			,pd_pressure as pdPressure
+			,pd_dn as pdDn
+			,pd_paint as pdPaint
+			,pd_sta as pdSta
+			,pd_ud as pdUd
+			,pd_no2 as pdNo2
+			,pd_body as pdBody
+			,pd_disc as pdDisc
+			,pd_scs13 as pdScs13 
+			,reg_dm as regDm
+			,reg_id as regId
+			,upd_dm as updDm
+			,upd_id as updId
+		from tb_product
+	</sql>
+
+	<select id="productManageList" resultType="productBean">
+		<include refid="global-paging.paging-head"/>
+		<include refid="tbProduct"/>
+		<include refid="global-paging.paging-tail"/>
+	</select>
+	
+	<select id="productManageListTotalCount" resultType="Integer">
+		select 
+			count(*)
+		from (	
+		<include refid="tbProduct"/>
+		) main
+	</select>
+	
+	<select id="generateMngId" resultType="String">
+		select 
+			concat(date_format(now(),'%Y'),lpad(max(substr(pd_mng_id,5,8))+1,4,0)) as newPdMngId
+		from tb_product
+	</select>
+	
+	<insert id="insertTbProduct" parameterType="productBean">
+		INSERT INTO TB_PRODUCT (pd_mng_id , pd_name , pd_po , pd_po2 , pd_valne , pd_type , pd_type2 , pd_pressure , pd_dn , pd_paint , pd_sta , pd_ud
+		, pd_no2 , pd_body , pd_disc , pd_scs13 , reg_dm , reg_id , upd_dm , upd_id )
+		VALUES (#{pdMngId , jdbcType=VARCHAR},#{pdName , jdbcType=VARCHAR},#{pdPo , jdbcType=VARCHAR},#{pdPo2 , jdbcType=VARCHAR} , #{pdValne , jdbcType=VARCHAR}
+		,#{pdType , jdbcType=VARCHAR} , #{pdType2 , jdbcType=VARCHAR} , #{pdPressure , jdbcType=VARCHAR} , #{pdDn , jdbcType=VARCHAR} , #{pdPaint , jdbcType=VARCHAR} 
+		,#{pdSta , jdbcType=VARCHAR} ,#{pdUd , jdbcType=VARCHAR} ,#{pdNo2 , jdbcType=VARCHAR} , #{pdBody , jdbcType=VARCHAR} , #{pdDisc , jdbcType=VARCHAR} 
+		,#{pdScs13 , jdbcType=VARCHAR} , date_format(now(),'%Y%m%d%H%i%s') , #{regId , jdbcType=VARCHAR}
+		,null , null) 
+	</insert> 
+	
+	<update id="deleteTbProduct" parameterType="productSearchBean">
+		UPDATE TB_PRODUCT
+		SET pd_del_yn = 'Y'
+			,upd_dm =  date_format(now(),'%Y%m%d%H%i%s')
+		WHERE pd_mng_id = #{pdMngId , jdbcType=VARCHAR}
+	</update>
+	
+	<select id="productManageDetail" resultType="productBean" parameterType="productSearchBean">
+		<include refid="tbProduct"/>
+		where pd_mng_id = #{pdMngId}
+	</select>
+
+</mapper>

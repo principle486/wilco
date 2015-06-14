@@ -28,7 +28,7 @@
 		<include refid="global-paging.paging-tail"/>
 	</select>
 	
-	<select id="companyManageListTotalCount" resultType="INTEGER">
+	<select id="companyManageListTotalCount" resultType="Integer">
 		select 
 			count(*)
 		from (	

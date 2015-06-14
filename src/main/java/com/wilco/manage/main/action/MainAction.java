@@ -22,7 +22,7 @@ public class MainAction {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/main.wilco", method = RequestMethod.GET)
+	@RequestMapping({"/main.wilco", "/"})
 	public String main(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		

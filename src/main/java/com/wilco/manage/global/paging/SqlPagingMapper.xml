@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global-paging">
+	
+	<!-- pagingYn 값이 Y 일경우 쿼리 최 상위에 <include refid="paging.head" />  -->
+	<sql id="paging-head">
+	SELECT pagingY.* FROM (    
+		SELECT pagingX.* FROM (
+			SELECT @ROWNUM:=@ROWNUM+1 NUM, pagingM.*
+			FROM (
+	</sql>
+	<!-- paging_yn 값이 Y 일경우 쿼리 맨아래에 <include refid="paging.tail" />  -->
+	<sql id="paging-tail">
+			) pagingM, (SELECT @ROWNUM:=0) initNum
+		) pagingX 
+		WHERE NUM &lt;= #{rowPerPage , jdbcType=VARCHAR} * #{currentPage , jdbcType=VARCHAR}
+		) pagingY
+		WHERE NUM &gt; (#{currentPage , jdbcType=VARCHAR} - 1) * #{rowPerPage , jdbcType=VARCHAR}
+	</sql>
+	
+</mapper>

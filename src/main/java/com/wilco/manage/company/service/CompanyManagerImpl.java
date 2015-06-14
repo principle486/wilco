@@ -21,14 +21,14 @@ public class CompanyManagerImpl implements CompanyManager {
 	private CompanyDao companyDao;
 	
 	
-	public List<CompanyBean> companyManageList(CompanySearchBean companySearchBean){
-		/*List<CompanyBean> list = companyDao.companyManageList(companySearchBean);
+	public Paging companyManageList(CompanySearchBean companySearchBean){
+		List<CompanyBean> list = companyDao.companyManageList(companySearchBean);
 		int totalCount = companyDao.companyManageListTotalCount();
 		int currentPage= Integer.parseInt(companySearchBean.getCurrentPage());
 		int rowPerPage = Integer.parseInt(companySearchBean.getRowPerPage());
-		
-		return new Paging(list, totalCount , currentPage, rowPerPage);*/
-		return companyDao.companyManageList(companySearchBean);
+		logger.debug(totalCount +", " + currentPage + ", " + rowPerPage);
+		return new Paging(list, totalCount , currentPage, rowPerPage);
+		//return companyDao.companyManageList(companySearchBean);
 		
 	}
 	

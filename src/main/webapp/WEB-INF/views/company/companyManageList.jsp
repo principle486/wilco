@@ -1,3 +1,4 @@
+<%@page import="com.wilco.manage.global.paging.Paging"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -78,15 +79,15 @@
 		    <tr>
             <th>#</th>
             <th>순번</th>
-            <th>발주처명</th>
+            <th>거래처명</th>
             <th>담당자명</th>
             <th>담당자연락처</th>
             <th>담당자이메일</th>
             <th>삭제여부</th>
             </tr>
           	<tbody>
-	          <c:forEach items="${pagingList}" var="companyList" varStatus="cpIdx">
-	              <tr onclick="javascript:goDetail('${companyList.cpMngId}')">
+	         <c:forEach items="${pagingList.list}" var="companyList" varStatus="cpIdx">
+	               <tr onclick="javascript:goDetail('${companyList.cpMngId}')">
 		          	<th scope="row"><input type="checkbox" id="cpMngIds" name="cpMngIds" value="${companyList.cpMngId}"/></th> 
 		            <td>${cpIdx.count}</td>
 		            <td><c:out value="${companyList.cpName}"/></td>
@@ -94,7 +95,7 @@
 		            <td><c:out value="${companyList.cpWorkMobile}"/></td>
 		            <td><c:out value="${companyList.cpWorkEmail}"/></td>
 		            <td><c:out value="${companyList.cpDelYn}"/></td>
-		          </tr>
+		          </tr> 
 		      </c:forEach>
        		 </tbody>
        	  </table>
